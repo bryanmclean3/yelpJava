@@ -22,26 +22,18 @@ public class readJSONFile {
 
         //initialize a hash table that stores the data that is to be parsed
         HT hashTableOne = new HT();        //hashtable that maps name to object
-        HT hashTableTwo = new HT();      //hashtable that maps to tf-idf value
+        HT hashTableTwo = new HT();      //hashtable that maps GSON to tf-idf value
 
         //loop through the array of json objects
         for (Object obj : jsonArray) {
             JSONObject jsonObject = (JSONObject) obj;
             Business business = gson.fromJson(jsonObject.toJSONString(), Business.class);
-            System.out.println("Categories: " + business.categories);
 
             hashTableOne.add(business.name);
-
-
-//            String name = (String) jsonObject.get("name");
-//            String postal_code = (String) jsonObject.get("postal_code");
-//            String address = (String) jsonObject.get("categories");
-//
-//            System.out.println("Name: " + name);
-//            System.out.println("Postal code: " + postal_code);
-//            System.out.println("Address: " + address);
-//            System.out.println(" ");
+            hashTableOne.setValue("St Honore Pastries", business.categories);
         }
+
+        //user inputs for example
 
         hashTableOne.printAll();
 
