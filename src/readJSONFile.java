@@ -24,18 +24,33 @@ public class readJSONFile {
         HT hashTableOne = new HT();        //hashtable that maps name to object
         HT hashTableTwo = new HT();      //hashtable that maps GSON to tf-idf value
 
-        //loop through the array of json objects
+        //loop through the array of json objects and add key
         for (Object obj : jsonArray) {
             JSONObject jsonObject = (JSONObject) obj;
             Business business = gson.fromJson(jsonObject.toJSONString(), Business.class);
 
             hashTableOne.add(business.name);
-            hashTableOne.setValue("St Honore Pastries", business.categories);
+        }
+
+        //loop through the array of json objects and add values for the keys
+        for (Object obj : jsonArray) {
+            JSONObject jsonObject = (JSONObject) obj;
+            Business business = gson.fromJson(jsonObject.toJSONString(), Business.class);
+
+            hashTableOne.setValue(business.name, business);
         }
 
         //user inputs for example
+        String userInput = "Perkiomen Valley Brewery";
 
-        hashTableOne.printAll();
+        //find user input in hashTableOne(name->GSON) then assign GSON as the key to hashTableTwo(GSON -> TFIDF)
+        Object gsonObj = hashTableOne.getValue(userInput);
+        String category = ((Business) gsonObj).categories;
+        System.out.print(category);
+
+
+
+//        hashTableOne.printAll();
 
     }
 
