@@ -1,0 +1,39 @@
+public static void main(String[] args) throws IOException, ParseException {
+
+        //initialize JSONParser and create an array of the json objects
+        JSONParser parser = new JSONParser();
+        JSONArray jsonArray = (JSONArray) parser.parse(new FileReader("file1.json"));
+        Gson g = new Gson();
+
+        //loop through the array of json objects
+        for (Object obj : jsonArray) {
+            JSONObject jsonObject = (JSONObject) obj;
+            String name = (String) jsonObject.get("name");
+            String postal_code = (String) jsonObject.get("postal_code");
+            String address = (String) jsonObject.get("categories");
+
+            System.out.println("Name: " + name);
+            System.out.println("Postal code: " + postal_code);
+            System.out.println("Address: " + address);
+            System.out.println(" ");
+        }
+    }
+
+
+
+
+
+
+
+
+
+JSONObject jsonObject = (JSONObject) obj;
+
+
+Business business = g.fromJson(String.valueOf(jsonObject), Business.class);
+
+System.out.println(business.name);
+System.out.println(business.address);
+System.out.println(business.state);
+System.out.println(business.postal_code);
+System.out.println(business.stars);
