@@ -111,8 +111,7 @@ public class ReadJson implements ActionListener {
 
         String userInput = input;
         Object gsonObj = hashTableOne.getValue(userInput);
-        hashTableOne.remove(input);
-        hashTableTwo.remove(gsonObj);
+
 
         if (gsonObj == null) {
             label1.setText("Invalid Business!");
@@ -122,6 +121,9 @@ public class ReadJson implements ActionListener {
         tfIdfCalculator calculator = new tfIdfCalculator();
         List<List<String>> documents = new ArrayList<>();
         List<List<String>> docs = new ArrayList<>();
+
+        hashTableOne.remove(input);
+        hashTableTwo.remove(gsonObj);
 
         String[] queryString = gsonObj.toString().split(", ");
         List<String> inputList = Arrays.asList(queryString);  //categories of input business
@@ -137,15 +139,13 @@ public class ReadJson implements ActionListener {
 
         for (int j = 0; j < documents.size(); j++) {
             double k = 0;
-            docs.add(documents.get(j));   //add one businesses categories
             for (int i = 0; i < inputList.size(); i++) {
-                double tfIdf = calculator.tfIdf(inputList, docs, inputList.get(i));
+                double tfIdf = calculator.tfIdf(documents.get(j), documents, inputList.get(i));
                 k = k + tfIdf;
             }
             String doc = String.valueOf(documents.get(j));
             String category = doc.substring(1, doc.length() - 1);  //get rid of brackets
             hashTableTwo.setValue(category, k);
-            docs.remove(documents.get(j));
         }
     }
 }
